@@ -32,7 +32,14 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
                     session_start();
                     $_SESSION['user_id']=$users->user_id;
                     $_SESSION['name']=$users->name;
-                    header('location:index.php');  
+                    if(!empty($_SESSION['url']))
+                    $url=$_SESSION['url'];
+                    else{
+                        $url='index.php';
+                    }
+                    header('location:'.$url); 
+                    $_SESSION['url']=''; 
+                    
                 }
                 else{
                     $errors['invalid']="Invalid Username/Password";
