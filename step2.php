@@ -10,8 +10,8 @@
     session_start();
     
 $email=$_SESSION['email'];
-echo $_SESSION['user_id'];
-$user_id=$_SESSION['user_id'];
+// echo $_SESSION['user_id'];
+// $user_id=$_SESSION['user_id'];
     
 require_once('database/connection.php');
 

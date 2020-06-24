@@ -7,7 +7,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     if (empty($_POST['email'])) {
         $errors['email']='Please Enter email';
     } else {
-        $email=sanitizeInput(($_POST['email']));
+        $email=sanitizeInput($_POST['email']);
     }
     if (empty($_POST['password'])) {
         $errors['password']='Please Enter Your Password';
@@ -83,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
             </div>
             <input type="submit" class="btn btn-primary" value="Log In">
         </form>
+        <a href="./welcome.php">Register Account</a>
     </div>
 </body>
 </html>
