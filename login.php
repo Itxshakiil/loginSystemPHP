@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-    // Importing sanitizeInput function to valiat input data
+    // Importing sanitizeInput function to validate input data
     require('sanitizeInput.php');
 
     $errors = array();
@@ -13,8 +13,6 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         $errors['password']='Please Enter Your Password';
     } else {
         $password=sanitizeInput(($_POST['password']));
-        // Hashing password
-        $password = md5($password);
     }
     if (empty($errors)) {
         // Importing database Connection File
@@ -25,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
             $statement->execute([':email'=>$email ]);
             $users=$statement->fetch(PDO::FETCH_OBJ);
             if (!empty($users)) {
-                if ($email==$users->email && $password==$users->password) {
+                if ($email==$users->email && password_verify($password, $users->password)) {
                     session_start();
                     $_SESSION['user_id']=$users->user_id;
                     $_SESSION['name']=$users->name;
@@ -52,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign up</title>
+    <title>Login</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
 </head>

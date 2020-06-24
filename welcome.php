@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     } else {
         $password=sanitizeInput(($_POST['password']));
         // Hashing password
-        $password = md5($password);
+        $password =  password_hash($password, PASSWORD_DEFAULT);;
     }
 
     if (empty($_POST['phone-number'])) {
@@ -74,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign up</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/main.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+    <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
     <div class="container">
