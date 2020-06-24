@@ -27,7 +27,8 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     } else {
         $password=sanitizeInput(($_POST['password']));
         // Hashing password
-        $password =  password_hash($password, PASSWORD_DEFAULT);;
+        $password =  password_hash($password, PASSWORD_DEFAULT);
+        ;
     }
 
     if (empty($_POST['phone-number'])) {
@@ -74,67 +75,65 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign up</title>
-    <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
-    <div class="container">
+    <div class="container card">
         <h2 class="lead-text">Sign up</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
         <?php
             if (!empty($message)):
                     ?>
-                    <div class="bg-info  mb-3"> <?=$message; ?></div>
+                    <div class="text-blue mb-2"> <?=$message; ?></div>
             <?php endif;?>
             <?php
             if (isset($errors)):
             foreach ($errors as $error):
             ?>
-            <div class="bg-danger mb-2"><?=$error; ?></div>
+            <div class="text-red mb-2"><?=$error; ?></div>
             <?php endforeach ?>
             <?php endif ?>
-            <div class="form-row">
-                <div class="form-group col-md-6">
+            <div class="flex">
+                <div class="w-full mb-2 mr-2">
                 <label for="first-name">First Name</label>
-                <input type="text" class="form-control" id="first-name" name="first-name"
+                <input type="text" id="first-name" name="first-name"
                 placeholder="First Name"  required >
                 </div>
-                <div class="form-group col-md-6">
+                <div class="w-full mb-2 ml-2">
                 <label for="last-name">Last name</label>
-                <input type="text" class="form-control" id="last-name" name="last-name" placeholder="Last name">
+                <input type="text" id="last-name" name="last-name" placeholder="Last name">
                 </div>
             </div>
-            <div class="form-group">
+            <div class="w-full mb-2">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter Your Email"  >
+                <input type="email" name="email" id="email" aria-describedby="emailHelp" placeholder="Enter Your Email"  >
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            <div class="form-group">
+            <div class="w-full mb-2">
                 <label for="password">Password</label>
-                <input type="password" class="form-control"  name="password" id="password" placeholder="Password" required  >
+                <input type="password"  name="password" id="password" placeholder="Password" required  >
             </div>  
-            <div class="form-group">
+            <div class="w-full mb-2">
                 <label for="phone-number">Phone Number</label>
-                <input type="number" class="form-control" id="phone-number" name="phone-number" title="Enter Valid Phone Number" aria-describedby="phone-help" placeholder="Phone Number" required >
+                <input type="number" id="phone-number" name="phone-number" title="Enter Valid Phone Number" aria-describedby="phone-help" placeholder="Phone Number" required >
                 <small id="phone-help" class="form-text text-muted">We'll never share your phone number with anyone else.</small>
             </div>
-            <div class="form-group">
+            <div class="w-full mb-2">
                 <label for="date-of-birth">Date of Birth</label>
-                <input type="date" class="form-control" name="date-of-birth" id="date-of-birth" required   >
+                <input type="date" name="date-of-birth" id="date-of-birth" required   >
             </div>  
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1" required>
+            <div class="flex align-baseline">
+                <input type="checkbox" class="mr-2" id="exampleCheck1" required>
                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
             </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
+            <div class="flex">
+                <div class="w-full mb-2 col-md-6">
                 <input type="submit" class="form-control btn btn-primary" value="Sign Up">
-                </div>
-                <div class="form-group col-md-6">
-                <a href="login.php" class="form-control btn btn-primary">Log In</a>
                 </div>
             </div>
         </form>
+        <hr>
+        <p class="text-center mt-2 text-blue">Already Have an account <a href="login.php" class="btn">Login!</a></p>
     </div>
 </body>
 </html>

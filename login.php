@@ -51,37 +51,38 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
-    <div class="container">
+    <div class=" container center">
+        <div class="card">
         <h2 class="lead-text">Log In</h2>
         <form action="" method="post">
         <?php
             if (!empty($message)):
                     ?>
-                    <div class="bg-info  mb-3"> <?=$message; ?></div>
+                    <div class="text-blue mb-2"> <?=$message; ?></div>
             <?php endif;?>
             <?php
             if (isset($errors)):
             foreach ($errors as $error):
             ?>
-            <div class="bg-danger mb-2"><?=$error; ?></div>
+            <div class="text-red mb-2"><?=$error; ?></div>
             <?php endforeach ?>
             <?php endif ?>
-            <div class="form-group">
+            <div class="w-full mb-2">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" name="email" id="email"  placeholder="Enter Your Email"  required>
+                <input type="email" name="email" id="email"  placeholder="Enter Your Email"  required>
             </div>
-            <div class="form-group">
+            <div class="w-full mb-2">
                 <label for="password">Password</label>
-                <input type="password" class="form-control"  name="password" id="password" aria-describedby="passwordHelp" placeholder="Password" required  >
+                <input type="password"  name="password" id="password" aria-describedby="passwordHelp" placeholder="Password" required  >
                 <small id="passwordhelp" class="form-text text-muted">Password is case-sensitive.</small>
             </div>
             <input type="submit" class="btn btn-primary" value="Log In">
         </form>
-        <a href="./welcome.php">Register Account</a>
+        <p class="text-center mt-2 text-blue">Dont Have an account <a href="./welcome.php" class="btn">Register!</a></p>
+        </div>
     </div>
 </body>
 </html>
