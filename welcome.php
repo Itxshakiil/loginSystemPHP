@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign up</title>
+    <title>Forgot Password</title>
     <link rel="stylesheet" href="css/style.min.css">
 </head>
 <body>
@@ -134,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         </form>
         <hr>
         <p class="text-center mt-2 text-blue">Already Have an account <a href="login.php" class="btn">Login!</a></p>
+        <p class="text-center mt-2 text-blue"><a href="./forget_password.php" class="btn">Forgot Password?</a></p>
     </div>
 </body>
 </html>

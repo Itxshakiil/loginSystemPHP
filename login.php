@@ -75,7 +75,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
                 <input type="email" name="email" id="email"  placeholder="Enter Your Email"  required>
             </div>
             <div class="w-full mb-2">
+                <div class="flex justify-between">
                 <label for="password">Password</label>
+                <a href="./forget_password.php" class="btn">Forgot Password?</a>
+                </div>
                 <input type="password"  name="password" id="password" aria-describedby="passwordHelp" placeholder="Password" required  >
                 <small id="passwordhelp" class="form-text text-muted">Password is case-sensitive.</small>
             </div>
