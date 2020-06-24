@@ -13,5 +13,4 @@ function full_path()
     $segments = explode('?', $uri, 2);
     $url = $segments[0];
     return $url;
-    
 }

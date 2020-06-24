@@ -1,0 +1,11 @@
+body {
+  margin-top: 50px;
+}
+
+.bg-danger {
+  padding-left: 1rem;
+  color: #fff;
+}
+.bold{
+  font-weight: bold;
+}

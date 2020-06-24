@@ -1,51 +1,45 @@
 <?php
-if($_SERVER['REQUEST_METHOD']=='POST'){
+if ($_SERVER['REQUEST_METHOD']=='POST') {
     // Importing sanitizeInput function to valiat input data
-     require('sanitizeInput.php');
+    require('sanitizeInput.php');
 
-     $errors = array();
-    if(empty($_POST['email'])){
+    $errors = array();
+    if (empty($_POST['email'])) {
         $errors['email']='Please Enter email';
-    }
-    else{
+    } else {
         $email=sanitizeInput(($_POST['email']));
     }
-    if(empty($_POST['password'])){
+    if (empty($_POST['password'])) {
         $errors['password']='Please Enter Your Password';
-    }
-    else{
+    } else {
         $password=sanitizeInput(($_POST['password']));
         // Hashing password
         $password = md5($password);
     }
-    if(empty($errors)){
-       // Importing database Connection File
-        require_once('connect/connection.php');
-        if(empty($e)){
-            
+    if (empty($errors)) {
+        // Importing database Connection File
+        require_once('database/connection.php');
+        if (empty($e)) {
             $sql='SELECT * FROM users WHERE email=:email';
             $statement=$connection->prepare($sql);
             $statement->execute([':email'=>$email ]);
             $users=$statement->fetch(PDO::FETCH_OBJ);
-            if(!empty($users)){
-                if($email==$users->email && $password==$users->password){
+            if (!empty($users)) {
+                if ($email==$users->email && $password==$users->password) {
                     session_start();
                     $_SESSION['user_id']=$users->user_id;
                     $_SESSION['name']=$users->name;
-                    if(!empty($_SESSION['url']))
-                    $url=$_SESSION['url'];
-                    else{
+                    if (!empty($_SESSION['url'])) {
+                        $url=$_SESSION['url'];
+                    } else {
                         $url='index.php';
                     }
-                    header('location:'.$url); 
-                    $_SESSION['url']=''; 
-                    
-                }
-                else{
+                    header('location:'.$url);
+                    $_SESSION['url']='';
+                } else {
                     $errors['invalid']="Invalid Username/Password";
                 }
-            }    
-            else{
+            } else {
                 $errors['not-found']="No user Found Please Try Again or Contact Admin.";
             }
         }
@@ -67,13 +61,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <h2 class="lead-text">Log In</h2>
         <form action="" method="post">
         <?php
-            if(!empty($message)):
+            if (!empty($message)):
                     ?>
                     <div class="bg-info  mb-3"> <?=$message; ?></div>
             <?php endif;?>
-            <?php  
-            if(isset($errors)):
-            foreach($errors as $error):
+            <?php
+            if (isset($errors)):
+            foreach ($errors as $error):
             ?>
             <div class="bg-danger mb-2"><?=$error; ?></div>
             <?php endforeach ?>

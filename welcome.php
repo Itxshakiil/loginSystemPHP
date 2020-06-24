@@ -1,70 +1,64 @@
 <?php
-if($_SERVER['REQUEST_METHOD']=='POST'){
+if ($_SERVER['REQUEST_METHOD']=='POST') {
     // Importing database Connection File
-    require_once('connect/connection.php');
+    require_once('database/connection.php');
     // Importing sanitizeInput function to valiat input data
     require('sanitizeInput.php');
     $errors = array();
  
-// Procesing name
-    if(empty($_POST['first-name'])){
+    // Procesing name
+    if (empty($_POST['first-name'])) {
         $errors['name']='Please Enter Your name';
-    }
-    else{
+    } else {
         $name=sanitizeInput(($_POST['first-name']));
     }
-    if(!empty($_POST['last-name'])){
+    if (!empty($_POST['last-name'])) {
         $lastName=sanitizeInput(($_POST['last-name']));
         $name = $name.' '.$lastName;
     }
-     if(empty($_POST['email'])){
+    if (empty($_POST['email'])) {
         $errors['email']='Please Enter Your Email';
-    }
-    else{
+    } else {
         $email=sanitizeInput(($_POST['email']));
     }
 
-    if(empty($_POST['password'])){
+    if (empty($_POST['password'])) {
         $errors['password']='Please Enter Your Password';
-    }
-    else{
+    } else {
         $password=sanitizeInput(($_POST['password']));
         // Hashing password
         $password = md5($password);
     }
 
-    if(empty($_POST['phone-number'])){
+    if (empty($_POST['phone-number'])) {
         $errors['phoneNumber']='Please Enter Your phone-number';
-    }
-    else{
+    } else {
         $phoneNumber=sanitizeInput(($_POST['phone-number']));
     }
 
-    if(empty($_POST['date-of-birth'])){
+    if (empty($_POST['date-of-birth'])) {
         $errors['dob']='Please Enter Your date-of-birth';
-    }
-    else{
+    } else {
         $dob=$_POST['date-of-birth'];
-    } 
+    }
 
-    if(empty($errors)){
-        if(empty($e)){
+    if (empty($errors)) {
+        if (empty($e)) {
             // Check if Email is already registered for any account
     
             $sql="SELECT * FROM users WHERE email=:email";
             $statement=$connection->prepare($sql);
-            if($statement->execute([':email'=>$email])){
-                if($count=$statement->rowCount()>0){
+            if ($statement->execute([':email'=>$email])) {
+                if ($count=$statement->rowCount()>0) {
                     $errors['exist']='Email already Registered try <a href="login.php">Log In</a>';
-                }
-                else{ 
+                } else {
                     $sql='INSERT INTO users(name, email , password , phone_number, dob) VALUES(:name, :email, :password, :phone_number, :dob)';
                     $statement=$connection->prepare($sql);
-                    if($statement->execute([':name'=> $name ,':email'=>$email , ':password'=>$password , ':phone_number'=>$phoneNumber , ':dob'=>$dob])){
-                    session_start();
-                    $_SESSION['email']=$email;
+                    if ($statement->execute([':name'=> $name ,':email'=>$email , ':password'=>$password , ':phone_number'=>$phoneNumber , ':dob'=>$dob])) {
+                        session_start();
+                        $_SESSION['email']=$email;
                         header('location:step2.php');
-                    }else{
+                    } else {
                         $errors['query']='Error';
                     }
                 }
@@ -88,13 +82,13 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         <h2 class="lead-text">Sign up</h2>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
         <?php
-            if(!empty($message)):
+            if (!empty($message)):
                     ?>
                     <div class="bg-info  mb-3"> <?=$message; ?></div>
             <?php endif;?>
-            <?php  
-            if(isset($errors)):
-            foreach($errors as $error):
+            <?php
+            if (isset($errors)):
+            foreach ($errors as $error):
             ?>
             <div class="bg-danger mb-2"><?=$error; ?></div>
             <?php endforeach ?>

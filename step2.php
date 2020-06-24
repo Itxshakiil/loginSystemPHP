@@ -6,68 +6,61 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
-<?php 
-	session_start();
-	
+<?php
+    session_start();
+    
 $email=$_SESSION['email'];
 echo $_SESSION['user_id'];
 $user_id=$_SESSION['user_id'];
     
-require_once('connect/connection.php');
+require_once('database/connection.php');
 
 $sql='SELECT * FROM users WHERE email=:email';
-		 $statement=$connection->prepare($sql);
-		 $statement->execute([':email'=>$email]);
-		 $users=$statement->fetch(PDO::FETCH_OBJ);
-		 if(!empty($users)){
-			$user_id=$users->user_id;
-			$username=$users->name;
-		 }
+         $statement=$connection->prepare($sql);
+         $statement->execute([':email'=>$email]);
+         $users=$statement->fetch(PDO::FETCH_OBJ);
+         if (!empty($users)) {
+             $user_id=$users->user_id;
+             $username=$users->name;
+         }
 ?>
 <?php
-	if($_SERVER['REQUEST_METHOD']=='POST')
-	{// Importing database Connection File
-        require_once('connect/connection.php');
+    if ($_SERVER['REQUEST_METHOD']=='POST') {// Importing database Connection File
+        require_once('database/connection.php');
         // Importing sanitizeInput function to valiat input data
         require('sanitizeInput.php');
     
-        $errors = array();    
-		if(empty($_POST['question']))
-		{
-			$errors['question']='Enter Your Security Question';
-		}
-		else
-		{
-			$question=sanitizeInput($_POST['question']);
-		}
-		if(empty($_POST['answer']))
-		{
-			$errors['answer']='Enter Your Security Answer.';
-		}
-		else
-		{
-			$answer=sanitizeInput($_POST['answer']);
-		}
-		if(empty($errors)){
-            if(empty($e)){ 
+        $errors = array();
+        if (empty($_POST['question'])) {
+            $errors['question']='Enter Your Security Question';
+        } else {
+            $question=sanitizeInput($_POST['question']);
+        }
+        if (empty($_POST['answer'])) {
+            $errors['answer']='Enter Your Security Answer.';
+        } else {
+            $answer=sanitizeInput($_POST['answer']);
+        }
+        if (empty($errors)) {
+            if (empty($e)) {
 
-                // check if already security question created or not 
+                // check if already security question created or not
 
                 //if not then
                 $sql='INSERT INTO quest(user_id, question, answer ) VALUES(:user_id,:question, :answer)';
                 $statement=$connection->prepare($sql);
-                if($statement->execute([':user_id'=> $user_id ,':question'=> $question ,':answer'=>$answer ])){
-                $message='Complete';
-                header('location:index.php');
-                }else{
+                if ($statement->execute([':user_id'=> $user_id ,':question'=> $question ,':answer'=>$answer ])) {
+                    $message='Complete';
+                    header('location:index.php');
+                } else {
                     $errors['query']='Error';
                 }
             }
         }
-	}
-	
-	
-	?>
+    }
+    
+    
+    ?>
 </head>
 <body>
 <div class="container">
@@ -76,13 +69,13 @@ $sql='SELECT * FROM users WHERE email=:email';
 </div>
 	<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
 	<?php
-        if(!empty($message)):
+        if (!empty($message)):
                 ?>
                 <div class="bg-info  mb-3"> <?=$message; ?></div>
         <?php endif;?>
-        <?php  
-        if(isset($errors)):
-        foreach($errors as $error):
+        <?php
+        if (isset($errors)):
+        foreach ($errors as $error):
         ?>
         <div class="bg-danger mb-2"><?=$error; ?></div>
         <?php endforeach ?>

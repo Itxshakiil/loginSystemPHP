@@ -17,7 +17,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$email=sanitizeInput($_POST['email']);
     if(empty($errors)){
 		// Importing database Connection File
-		 require_once('connect/connection.php');
+		 require_once('database/connection.php');
 		 if(empty($e)){
 			 
 			 $sql='SELECT * FROM users WHERE email=:email';
